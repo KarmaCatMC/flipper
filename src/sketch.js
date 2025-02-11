@@ -143,7 +143,7 @@ let circleBotBotLeft = new Circle(200, 500, "black", 35);
 let circleBotBotRight = new Circle(400, 500, "black", 35);
 
 function setup() {
-    createCanvas(600, 800, P2D, flipperCanvas);
+    createCanvas(700, 800, P2D, flipperCanvas);
 
     pos = createVector(500, 100, 0);
     vel2 = createVector(0, 0, 0)
@@ -183,7 +183,7 @@ function calculateVector() {
             distX = pos.x - pos.x;
             break;
         case true:
-            distX = width / 2 - pos.x;
+            distX = 300 - pos.x;
             break;
     }
     angleToMouse = atan2(distY, distX);
@@ -242,7 +242,7 @@ function keyPressed() {
 function draw() {
     ms = millis()
     colliding = false
-    background(255)
+    background(250)
 
     // drawing the level and flippers
     drawLevel()
