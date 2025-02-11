@@ -177,6 +177,13 @@ function checkCollision() {
         vel1.x = vel1.x / 2
         vel1.y = vel1.y / 2
     }
+    posTempX = posTemp.x / 4
+    posTempY = posTemp.y / 4
+    checkCol = get(posTempX,posTempY)
+    if (checkCol[0] === 0 && checkCol[1] === 0) {
+        vel1.x = vel1.x / 4
+        vel1.y = vel1.y / 4
+    }
 }
 
 function drawBall() {
@@ -206,7 +213,7 @@ function calculateVector() {
 }
 
 function resetGravity() {
-    if (speedY < 2 && colliding == false) {
+    if (speedY < 2 && colliding === false) {
         speedY += height * 0.0001;
         if (pos.y < 50) {
             speedY = 1;
@@ -223,10 +230,10 @@ function checkAlive() {
 }
 
 function trackScore() {
-    if (alive == 1) {
+    if (alive === 1) {
         score = ms / 1000 - lastMs / 1000
         score = round(score, 1)
-    } else if (alive == 0) {
+    } else if (alive === 0) {
         if (score > highscore) {
             highscore = score
             textHighscore.updateValue(highscore)
@@ -247,7 +254,7 @@ function keyPressed() {
         flipperLeft.move();
     } else if (key === "d") {
         flipperRight.move();
-    } else if (keyCode === 32 && alive == 0) {
+    } else if (keyCode === 32 && alive === 0) {
         respawn()
     }
 }
