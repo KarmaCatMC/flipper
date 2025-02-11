@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8"/>
+
+</head>
+<body>
+<main style="width: 100%; display: flex">
+    <div style="margin-left: 0; width: 500px">
+        <h1>
+            Flipper
+        </h1>
+        <p style="white-space: pre-line; font-size: x-large">
+            Press 'a' and 'd' to control the flippers
+            press 'space' respawn
+            the gray number is your current score
+            the golden number is your Highscore
+            try to survive for as long as you can
+        </p>
+    </div>
+    <div style="width: max-content;">
+        <canvas id="flipperCanvas"></canvas>
+    </div>
+</main>
+<script src="/src/detectCollision.js"></script>
+<script src="/src/obstacle.js"></script>
+<script src="/src/sketch.js"></script>
+</body>
+</html>
