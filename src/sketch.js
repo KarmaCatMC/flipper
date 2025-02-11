@@ -145,7 +145,7 @@ let circleBotBotRight = new Circle(400, 500, "black", 35);
 function setup() {
     createCanvas(700, 800, P2D, flipperCanvas);
 
-    pos = createVector(500, 100, 0);
+    pos = createVector(400, 100, 0);
     vel2 = createVector(0, 0, 0)
     point(pos);
 }
@@ -199,6 +199,12 @@ function resetGravity() {
             speedY = 1;
         }
     }
+    if (vel2 > 0){
+        vel2.sub(0.1,0.1,0)
+    }
+    if (speedY > 3){
+        speedY = 3
+    }
 }
 
 function checkAlive() {
@@ -223,9 +229,11 @@ function trackScore() {
 }
 
 function respawn() {
-    pos.x = random(100, 500)
+    pos.x = random(150, 450)
     pos.y = 75
     speedY = 2
+    vel2.set(0,0,0)
+    vel1.set(0,0,0)
     lastMs = ms
 }
 
