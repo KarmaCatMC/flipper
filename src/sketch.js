@@ -118,6 +118,9 @@ let highscore = 0;
 let ms;
 let alive;
 let lastMs = 0;
+let posTempX;
+let posTempY;
+let checkCol;
 
 // creating the flippers and obstacles
 let textScore = new Textdisplay(score, 300, 75, 'gray')
@@ -144,6 +147,7 @@ function setup() {
 
     pos = createVector(500, 100, 0);
     vel2 = createVector(0, 0, 0)
+    posTemp = createVector(0,0,0)
     point(pos);
 }
 
@@ -164,8 +168,20 @@ function drawLevel() {
     circleBotBotRight.show();
 }
 
+function checkCollision() {
+    posTemp.add(vel1)
+    posTempX = posTemp.x / 2
+    posTempY = posTemp.y / 2
+    checkCol = get(posTempX,posTempY)
+    if (checkCol[0] === 0 && checkCol[1] === 0) {
+        vel1.x = vel1.x / 2
+        vel1.y = vel1.y / 2
+    }
+}
+
 function drawBall() {
     vel1.add(vel2)
+    checkCollision()
     pos.add(vel1);
     strokeWeight(30);
     stroke("silver");
