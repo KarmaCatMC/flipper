@@ -3,8 +3,8 @@
 function detectCollision() {
     colLeft = get(pos.x - 15, pos.y);
     if (colLeft[0] === 0 && colLeft[1] === 0) {
-        pos.x += 1;
-        vel2.sub(0.35,0,0)
+        pos.x += 2;
+        vel2.sub(-0.35,0,0)
         colliding = true;
         if (colLeft[2] === 255) {
             colPoint = "left";
@@ -17,8 +17,8 @@ function detectCollision() {
     }
     colRight = get(pos.x + 15, pos.y);
     if (colRight[0] === 0 && colRight[1] === 0) {
-        pos.x -= 1;
-        vel2.set(-0.35,0,0)
+        pos.x -= 2;
+        vel2.set(0.35,0,0)
         colliding = true;
         if (colRight[2] === 255) {
             colPoint = "right";
@@ -31,7 +31,7 @@ function detectCollision() {
     }
     colTop = get(pos.x, pos.y - 15);
     if (colTop[0] === 0 && colTop[1] === 0) {
-        pos.y += 1;
+        pos.y += 2;
         vel2.set(0,-0.35,0)
         colliding = true;
         if (colTop[2] === 255) {
@@ -45,7 +45,7 @@ function detectCollision() {
     }
     colBottom = get(pos.x, pos.y + 15);
     if (colBottom[0] === 0 && colBottom[1] === 0) {
-        pos.y -= 1;
+        pos.y -= 2;
         vel2.set(0,0.35,0)
         colliding = true;
         if (colBottom[2] === 255) {
@@ -59,9 +59,9 @@ function detectCollision() {
     }
     colTopLeft = get(pos.x - 10, pos.y - 10);
     if (colTopLeft[0] === 0 && colTopLeft[1] === 0) {
-        pos.x += 1;
-        pos.y += 1;
-        vel2.set(-0.35,-0.35,0)
+        pos.x += 2;
+        pos.y += 2;
+        vel2.set(0.35,-0.35,0)
         colliding = true;
         if (colTopLeft[2] === 255) {
             colPoint = "topLeft";
@@ -74,9 +74,9 @@ function detectCollision() {
     }
     colTopRight = get(pos.x + 10, pos.y - 10);
     if (colTopRight[0] === 0 && colTopRight[1] === 0) {
-        pos.x -= 1;
-        pos.y += 1;
-        vel2.set(0.35,-0.35,0)
+        pos.x -= 2;
+        pos.y += 2;
+        vel2.set(-0.35,-0.35,0)
         colliding = true;
         if (colTopRight[2] === 255) {
             colPoint = "topRight";
@@ -89,9 +89,9 @@ function detectCollision() {
     }
     colBotRight = get(pos.x + 10, pos.y + 10);
     if (colBotRight[0] === 0 && colBotRight[1] === 0) {
-        pos.y -= 1;
-        pos.x -= 1;
-        vel2.set(0.35,0.35,0)
+        pos.y -= 2;
+        pos.x -= 2;
+        vel2.set(-0.35,0.35,0)
         colliding = true;
         if (colBotRight[2] === 255) {
             colPoint = "bottomRight";
@@ -104,9 +104,9 @@ function detectCollision() {
     }
     colBotLeft = get(pos.x - 10, pos.y + 10);
     if (colBotLeft[0] === 0 && colBotLeft[1] === 0) {
-        pos.y -= 1;
-        pos.x += 1;
-        vel2.set(-0.35,0.35,0)
+        pos.y -= 2;
+        pos.x += 2;
+        vel2.set(0.35,0.35,0)
         colliding = true;
         if (colBotLeft[2] === 255) {
             colPoint = "bottomLeft";
