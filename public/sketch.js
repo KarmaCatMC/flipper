@@ -118,6 +118,9 @@ let highscore = 0;
 let ms;
 let alive;
 let lastMs = 0;
+let posTempX;
+let posTempY;
+let checkCol;
 
 // creating the flippers and obstacles
 let textScore = new Textdisplay(score, 300, 75, 'gray')
@@ -140,9 +143,9 @@ let circleBotBotLeft = new Circle(200, 500, "black", 35);
 let circleBotBotRight = new Circle(400, 500, "black", 35);
 
 function setup() {
-    createCanvas(600, 800, P2D, flipperCanvas);
+    createCanvas(700, 800, P2D, flipperCanvas);
 
-    pos = createVector(500, 100, 0);
+    pos = createVector(400, 100, 0);
     vel2 = createVector(0, 0, 0)
     point(pos);
 }
@@ -180,7 +183,7 @@ function calculateVector() {
             distX = pos.x - pos.x;
             break;
         case true:
-            distX = width / 2 - pos.x;
+            distX = 300 - pos.x;
             break;
     }
     angleToMouse = atan2(distY, distX);
@@ -190,11 +193,17 @@ function calculateVector() {
 }
 
 function resetGravity() {
-    if (speedY < 2 && colliding == false) {
+    if (speedY < 2 && colliding === false) {
         speedY += height * 0.0001;
         if (pos.y < 50) {
             speedY = 1;
         }
+    }
+    if (vel2 > 0){
+        vel2.sub(0.1,0.1,0)
+    }
+    if (speedY > 3){
+        speedY = 3
     }
 }
 
@@ -207,10 +216,10 @@ function checkAlive() {
 }
 
 function trackScore() {
-    if (alive == 1) {
+    if (alive === 1) {
         score = ms / 1000 - lastMs / 1000
         score = round(score, 1)
-    } else if (alive == 0) {
+    } else if (alive === 0) {
         if (score > highscore) {
             highscore = score
             textHighscore.updateValue(highscore)
@@ -220,9 +229,11 @@ function trackScore() {
 }
 
 function respawn() {
-    pos.x = random(100, 500)
+    pos.x = random(150, 450)
     pos.y = 75
     speedY = 2
+    vel2.set(0,0,0)
+    vel1.set(0,0,0)
     lastMs = ms
 }
 
@@ -231,7 +242,7 @@ function keyPressed() {
         flipperLeft.move();
     } else if (key === "d") {
         flipperRight.move();
-    } else if (keyCode === 32 && alive == 0) {
+    } else if (keyCode === 32 && alive === 0) {
         respawn()
     }
 }
@@ -239,7 +250,7 @@ function keyPressed() {
 function draw() {
     ms = millis()
     colliding = false
-    background(255)
+    background(250)
 
     // drawing the level and flippers
     drawLevel()
