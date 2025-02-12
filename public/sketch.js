@@ -118,9 +118,8 @@ let highscore = 0;
 let ms;
 let alive;
 let lastMs = 0;
-let posTempX;
-let posTempY;
-let checkCol;
+let respawnPos;
+let vel1 = 0;
 
 // creating the flippers and obstacles
 let textScore = new Textdisplay(score, 300, 75, 'gray')
@@ -193,6 +192,7 @@ function calculateVector() {
 }
 
 function resetGravity() {
+    console.log(vel1.y)
     if (speedY < 2 && colliding === false) {
         speedY += height * 0.0001;
         if (pos.y < 50) {
@@ -204,6 +204,9 @@ function resetGravity() {
     }
     if (speedY > 3){
         speedY = 3
+    }
+    if (vel1.y < -5) {
+        vel2.set(vel1.x, vel1.y - (vel1.y + 5))
     }
 }
 
@@ -229,7 +232,16 @@ function trackScore() {
 }
 
 function respawn() {
-    pos.x = random(150, 450)
+    respawnPos = round(random(0,1))
+    console.log(respawnPos)
+    switch(respawnPos) {
+        case 0:
+            pos.x = random(150,250)
+            break;
+        case 1:
+            pos.x = random(350,450)
+            break;
+    }
     pos.y = 75
     speedY = 2
     vel2.set(0,0,0)
