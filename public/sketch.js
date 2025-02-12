@@ -192,7 +192,6 @@ function calculateVector() {
 }
 
 function resetGravity() {
-    console.log(vel1.y)
     if (speedY < 2 && colliding === false) {
         speedY += height * 0.0001;
         if (pos.y < 50) {
@@ -233,7 +232,6 @@ function trackScore() {
 
 function respawn() {
     respawnPos = round(random(0,1))
-    console.log(respawnPos)
     switch(respawnPos) {
         case 0:
             pos.x = random(150,250)
@@ -247,6 +245,16 @@ function respawn() {
     vel2.set(0,0,0)
     vel1.set(0,0,0)
     lastMs = ms
+}
+
+function touchStarted() {
+    if (touches[0].y > 300 && alive === 0){
+        respawn()
+    } else if (touches[0].x > 300 && alive === 1){
+        flipperRight.move()
+    } else if (touches[0].x < 300 && alive === 1){
+        flipperLeft.move()
+    }
 }
 
 function keyPressed() {
