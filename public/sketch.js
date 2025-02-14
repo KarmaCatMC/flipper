@@ -84,14 +84,12 @@ class Flipper {
         switch (this.side) {
             case "left":
                 if (this.d < 0) {
-                    speedY += -2.5;
-                    vel2.add(2, 0, 0)
+                    vel = p5.Vector.fromAngle(268, vel.mag() + 1.5)
                 }
                 break;
             case "right":
                 if (this.d > 0) {
-                    speedY += -2.5;
-                    vel2.add(-2, 0, 0)
+                    vel = p5.Vector.fromAngle(272, vel.mag() + 1.5)
                 }
                 break;
         }
@@ -99,8 +97,8 @@ class Flipper {
 }
 
 // defining variables
-let angleToMouse;
 let pos;
+let vel;
 let colLeft;
 let colRight;
 let colBottom;
@@ -110,7 +108,6 @@ let colBotRight;
 let colTopRight;
 let colTopLeft;
 let colliding;
-let distX;
 let colPoint;
 let speedY = 2;
 let score;
@@ -119,7 +116,6 @@ let ms;
 let alive;
 let lastMs = 0;
 let respawnPos;
-let vel1 = 0;
 
 // creating the flippers and obstacles
 let textScore = new Textdisplay(score, 300, 75, 'gray')
@@ -144,8 +140,9 @@ let circleBotBotRight = new Circle(400, 500, "black", 35);
 function setup() {
     createCanvas(700, 800, P2D, flipperCanvas);
 
-    pos = createVector(400, 100, 0);
-    vel2 = createVector(0, 0, 0)
+    pos = createVector(450, 100, 0);
+    // vel = createVector(0, 0, 0)
+    vel = p5.Vector.fromAngle(1, 2)
     point(pos);
 }
 
@@ -167,45 +164,15 @@ function drawLevel() {
 }
 
 function drawBall() {
-    vel1.add(vel2)
-    pos.add(vel1);
     strokeWeight(30);
     stroke("silver");
     point(pos);
 }
 
-function calculateVector() {
-    // calculating the angle and distance from the ball to the mouse
-    let distY = height - pos.y;
-    switch (colliding) {
-        case false:
-            distX = pos.x - pos.x;
-            break;
-        case true:
-            distX = 300 - pos.x;
-            break;
-    }
-    angleToMouse = atan2(distY, distX);
-
-    // calculating the vector based on the angle and distance calculated above
-    vel1 = p5.Vector.fromAngle(angleToMouse, speedY);
-}
-
 function resetGravity() {
-    if (speedY < 2 && colliding === false) {
-        speedY += height * 0.0001;
-        if (pos.y < 50) {
-            speedY = 1;
-        }
-    }
-    if (vel2 > 0){
-        vel2.sub(0.1,0.1,0)
-    }
-    if (speedY > 3){
-        speedY = 3
-    }
-    if (vel1.y < -5) {
-        vel2.set(vel1.x, vel1.y - (vel1.y + 5))
+    console.log(vel.y);
+    if (vel.y < 2) {
+        vel.sub(0, -0.025, 0)
     }
 }
 
@@ -214,6 +181,8 @@ function checkAlive() {
         alive = 1
     } else if (pos.y >= 700) {
         alive = 0
+        vel.x = 0
+        vel.y = 0
     }
 }
 
@@ -231,30 +200,20 @@ function trackScore() {
 }
 
 function respawn() {
-    respawnPos = round(random(0,1))
-    switch(respawnPos) {
+    respawnPos = round(random(0, 1))
+    switch (respawnPos) {
         case 0:
-            pos.x = random(150,250)
+            pos.x = random(150, 250)
             break;
         case 1:
-            pos.x = random(350,450)
+            pos.x = random(350, 450)
             break;
     }
     pos.y = 75
     speedY = 2
-    vel2.set(0,0,0)
-    vel1.set(0,0,0)
+    vel2.set(0, 0, 0)
+    vel1.set(0, 0, 0)
     lastMs = ms
-}
-
-function touchStarted() {
-    if (touches[0].y > 300 && alive === 0){
-        respawn()
-    } else if (touches[0].x > 300 && alive === 1){
-        flipperRight.move()
-    } else if (touches[0].x < 300 && alive === 1){
-        flipperLeft.move()
-    }
 }
 
 function keyPressed() {
@@ -265,6 +224,19 @@ function keyPressed() {
     } else if (keyCode === 32 && alive === 0) {
         respawn()
     }
+}
+
+function drawArrow(base, vec, myColor) {
+    push();
+    stroke(myColor);
+    strokeWeight(3);
+    fill(myColor);
+    translate(base.x, base.y);
+    line(0, 0, vec.x * 10, vec.y * 10);
+    rotate(vec.heading());
+    let arrowSize = 7;
+    translate(vec.mag() - arrowSize, 0);
+    pop();
 }
 
 function draw() {
@@ -279,11 +251,11 @@ function draw() {
     flipperLeft.show()
     flipperRight.show()
 
+    vel = detectCollision()
+    pos = calculatePosition(pos, vel)
     resetGravity()
-    detectCollision()
-    calculateVector()
-    detectCollision()
     drawBall()
+    drawArrow(pos, vel, 'black')
     checkAlive()
     trackScore()
     textScore.updateValue(score)
