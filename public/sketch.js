@@ -141,7 +141,6 @@ let circleBotBotRight = new Circle(400, 500, "black", 35);
 
 function setup() {
     createCanvas(700, 800, P2D, flipperCanvas);
-    angleMode(DEGREES)
 
     pos = createVector(450, 100, 0);
     vel = createVector(0, 0, 0)
@@ -250,7 +249,6 @@ function draw() {
     colliding = false
     background(250)
 
-    console.log(angleMode())
     console.log(vel.heading())
     // drawing the level and flippers
     drawLevel()

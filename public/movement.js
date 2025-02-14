@@ -1,5 +1,5 @@
 let gravity;
-gravity = p5.Vector.fromAngle(180, 2)
+gravity = p5.Vector.fromAngle(3.14159, 2)
 let newDirection
 let newVel
 
@@ -12,70 +12,60 @@ function calculatePosition(pos, vel) {
 function calculateVelocity(colDirection, vel) {
     switch (colDirection) {
         case 'left':
-            if (vel.heading() > 180 && vel.heading() < 270) {
-                newDirection = vel.heading() + 90
-            } else if (vel.heading() > 90 && vel.heading() < 180) {
-                newDirection = vel.heading() - 270
+            if (vel.heading() > 3.14 && vel.heading() < 4.71) {
+                newDirection = vel.heading() + 1.57
+            } else if (vel.heading() > 1.57 && vel.heading() < 3.14) {
+                newDirection = vel.heading() - 4.71
             }break;
         case 'right':
-            if (vel.heading() > 270 && vel.heading() < 360) {
-                newDirection = vel.heading() - 90
-                console.log('-90')
-            } else if (vel.heading() > 0 && vel.heading() < 90) {
-                newDirection = vel.heading() + 90
-                console.log('+90')
+            if (vel.heading() > 4.71 && vel.heading() < 6.28) {
+                newDirection = vel.heading() - 1.57
+            } else if (vel.heading() > 0 && vel.heading() < 1.57) {
+                newDirection = vel.heading() + 1.57
             }break;
         case 'bottom':
-            if (vel.heading() > 0 && vel.heading() < 90) {
-                newDirection = vel.heading() + 270
-            } else if (vel.heading() > 90 && vel.heading() < 180) {
-                newDirection = vel.heading() + 90
+            if (vel.heading() > 0 && vel.heading() < 1.57) {
+                newDirection = vel.heading() + 4.71
+            } else if (vel.heading() > 1.57 && vel.heading() < 3.14) {
+                newDirection = vel.heading() + 1.57
             }
             break;
         case 'top':
-            if (vel.heading() > 270 && vel.heading() < 360) {
-                newDirection = vel.heading() - 270
-            } else if (vel.heading() > 180 && vel.heading() < 270) {
-                newDirection = vel.heading() - 90
+            if (vel.heading() > 4.71 && vel.heading() < 6.28) {
+                newDirection = vel.heading() - 4.71
+            } else if (vel.heading() > 3.14 && vel.heading() < 4.71) {
+                newDirection = vel.heading() - 1.57
             }
             break;
         case 'leftTop':
-            console.log(angleMode())
-            console.log(vel.heading())
             if (vel.heading() > 215 && vel.heading() < 310) {
-                newDirection = vel.heading() - 270
+                newDirection = vel.heading() - 4.71
             } else if (vel.heading() > 215 && vel.heading() < 310) {
-                newDirection = vel.heading() - 90
+                newDirection = vel.heading() - 1.57
             }break;
         case 'rightTop':
-            console.log(angleMode())
-            console.log(vel.heading())
             if (vel.heading() > 225 && vel.heading() < 315) {
-                newDirection = vel.heading() - 90
-            } else if (vel.heading() > 315 && vel.heading() < 360) {
-                newDirection = vel.heading() - 270
+                newDirection = vel.heading() - 1.57
+            } else if (vel.heading() > 315 && vel.heading() < 6.28) {
+                newDirection = vel.heading() - 4.71
             } else if (vel.heading() > 0 && vel.heading() < 45) {
-                newDirection = vel.heading() + 90
+                newDirection = vel.heading() + 1.57
             }break;
         case 'leftBottom':
-            console.log(angleMode())
-            console.log(vel.heading())
             if (vel.heading() > 135 && vel.heading() < 225) {
-                newDirection = vel.heading() + 90
+                newDirection = vel.heading() + 1.57
                 console.log(newDirection)
             } else if (vel.heading() > 45 && vel.heading() < 135) {
-                newDirection = vel.heading() - 270
+                newDirection = vel.heading() - 4.71
                 console.log(newDirection)
             }break;
         case 'rightBottom':
-            console.log(angleMode())
-            console.log(vel.heading())
             if (vel.heading() > 45 && vel.heading() < 315) {
-                newDirection = vel.heading() + 90
-            } else if (vel.heading() > 315 && vel.heading() < 360) {
-                newDirection = vel.heading() -90
+                newDirection = vel.heading() + 1.57
+            } else if (vel.heading() > 315 && vel.heading() < 6.28) {
+                newDirection = vel.heading() -1.57
             } else if (vel.heading() > 0 && vel.heading() < 45) {
-                newDirection = vel.heading() - 270
+                newDirection = vel.heading() - 4.71
             }break;
     }
     //console.log(newDirection);
