@@ -84,14 +84,12 @@ class Flipper {
         switch (this.side) {
             case "left":
                 if (this.d < 0) {
-                    speedY += -2.5;
-                    //vel2.add(2, 0, 0)
+                    vel = p5.Vector.fromAngle(268, vel.mag() + 1.5)
                 }
                 break;
             case "right":
                 if (this.d > 0) {
-                    speedY += -2.5;
-                    //vel2.add(-2, 0, 0)
+                    vel = p5.Vector.fromAngle(272, vel.mag() + 1.5)
                 }
                 break;
         }
@@ -144,7 +142,7 @@ function setup() {
 
     pos = createVector(450, 100, 0);
     // vel = createVector(0, 0, 0)
-    vel = p5.Vector.fromAngle(1.1,2)
+    vel = p5.Vector.fromAngle(1, 2)
     point(pos);
 }
 
@@ -172,14 +170,9 @@ function drawBall() {
 }
 
 function resetGravity() {
-    if(vel.heading > 4.45 && vel.heading < 4.97){
-        vel.setMag(vel.mag()-0.5)
-    } else if (vel.heading < 4.45 && vel.heading > 1.57){
-        vel = p5.Vector.fromAngle(vel.heading - 0.08, vel.mag())
-    } else if (vel.heading > 4.97 && vel.heading < 6.28){
-        vel = p5.Vector.fromAngle(vel.heading + 0.08 , vel.mag())
-    } else if (vel.heading > 0 && vel.heading < 1.57){
-        vel = p5.Vector.fromAngle(vel.heading + 0.08, vel.mag())
+    console.log(vel.y);
+    if (vel.y < 2) {
+        vel.sub(0, -0.025, 0)
     }
 }
 
@@ -188,6 +181,8 @@ function checkAlive() {
         alive = 1
     } else if (pos.y >= 700) {
         alive = 0
+        vel.x = 0
+        vel.y = 0
     }
 }
 
@@ -205,19 +200,19 @@ function trackScore() {
 }
 
 function respawn() {
-    respawnPos = round(random(0,1))
-    switch(respawnPos) {
+    respawnPos = round(random(0, 1))
+    switch (respawnPos) {
         case 0:
-            pos.x = random(150,250)
+            pos.x = random(150, 250)
             break;
         case 1:
-            pos.x = random(350,450)
+            pos.x = random(350, 450)
             break;
     }
     pos.y = 75
     speedY = 2
-    vel2.set(0,0,0)
-    vel1.set(0,0,0)
+    vel2.set(0, 0, 0)
+    vel1.set(0, 0, 0)
     lastMs = ms
 }
 
@@ -237,7 +232,7 @@ function drawArrow(base, vec, myColor) {
     strokeWeight(3);
     fill(myColor);
     translate(base.x, base.y);
-    line(0, 0, vec.x*10, vec.y*10);
+    line(0, 0, vec.x * 10, vec.y * 10);
     rotate(vec.heading());
     let arrowSize = 7;
     translate(vec.mag() - arrowSize, 0);
@@ -249,7 +244,6 @@ function draw() {
     colliding = false
     background(250)
 
-
     // drawing the level and flippers
     drawLevel()
     flipperLeft.descend()
@@ -259,10 +253,9 @@ function draw() {
 
     vel = detectCollision()
     pos = calculatePosition(pos, vel)
-    // detectCollision()
+    resetGravity()
     drawBall()
     drawArrow(pos, vel, 'black')
-    resetGravity()
     checkAlive()
     trackScore()
     textScore.updateValue(score)
