@@ -255,7 +255,7 @@ function draw() {
     pos = calculatePosition(pos, vel)
     resetGravity()
     drawBall()
-    drawArrow(pos, vel, 'black')
+    //drawArrow(pos, vel, 'black')
     checkAlive()
     trackScore()
     textScore.updateValue(score)
