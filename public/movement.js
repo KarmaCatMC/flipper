@@ -1,76 +1,84 @@
 let gravity;
-gravity = p5.Vector.fromAngle(3.14159, 2)
+gravity = p5.Vector.fromAngle(180, 2)
 let newDirection
 let newVel
 
+function degToRad(deg){
+    if (deg <= 180){
+        return deg*(PI/180)
+    } else {
+        return -PI + ((deg - 180) * (PI / 180))
+    }
+}
+
+
 function calculatePosition(pos, vel) {
-    //console.log('new pos')
-    //console.log(vel)
     return pos.add(vel)
 }
 
 function calculateVelocity(colDirection, vel) {
     switch (colDirection) {
         case 'left':
-            if (vel.heading() > 3.14 && vel.heading() < 4.71) {
-                newDirection = vel.heading() + 1.57
-            } else if (vel.heading() > 1.57 && vel.heading() < 3.14) {
-                newDirection = vel.heading() - 4.71
+            if (vel.heading() > degToRad(180) && vel.heading() < degToRad(270)) {
+                newDirection = vel.heading() + degToRad(90)
+            } else if (vel.heading() > degToRad(90) && vel.heading() < degToRad(180)) {
+                newDirection = vel.heading() - degToRad(90)
             }break;
         case 'right':
-            if (vel.heading() > 4.71 && vel.heading() < 6.28) {
-                newDirection = vel.heading() - 1.57
-            } else if (vel.heading() > 0 && vel.heading() < 1.57) {
-                newDirection = vel.heading() + 1.57
+            if (vel.heading() > degToRad(270) && vel.heading() < degToRad(360)) {
+                newDirection = vel.heading() - degToRad(90)
+            } else if (vel.heading() > 0 && vel.heading() < degToRad(90)) {
+                newDirection = vel.heading() + degToRad(90)
             }break;
         case 'bottom':
-            if (vel.heading() > 0 && vel.heading() < 1.57) {
-                newDirection = vel.heading() + 4.71
-            } else if (vel.heading() > 1.57 && vel.heading() < 3.14) {
-                newDirection = vel.heading() + 1.57
+            if (vel.heading() > 0 && vel.heading() < degToRad(90)) {
+                newDirection = vel.heading() + degToRad(270)
+            } else if (vel.heading() > degToRad(90) && vel.heading() < degToRad(180)) {
+                newDirection = vel.heading() + degToRad(90)
             }
             break;
         case 'top':
-            if (vel.heading() > 4.71 && vel.heading() < 6.28) {
-                newDirection = vel.heading() - 4.71
-            } else if (vel.heading() > 3.14 && vel.heading() < 4.71) {
-                newDirection = vel.heading() - 1.57
+            if (vel.heading() > degToRad(270) && vel.heading() < degToRad(360)) {
+                newDirection = vel.heading() - degToRad(270)
+            } else if (vel.heading() > degToRad(180) && vel.heading() < degToRad(270)) {
+                newDirection = vel.heading() - degToRad(90)
+            } else {
+                // TODO: introduce correct top handling
+                newDirection = -newDirection // hotfix: current fallback for edgecase
             }
             break;
         case 'leftTop':
             if (vel.heading() > 215 && vel.heading() < 310) {
-                newDirection = vel.heading() - 4.71
+                newDirection = vel.heading() - degToRad(270)
             } else if (vel.heading() > 215 && vel.heading() < 310) {
-                newDirection = vel.heading() - 1.57
+                newDirection = vel.heading() - degToRad(90)
             }break;
         case 'rightTop':
-            if (vel.heading() > 225 && vel.heading() < 315) {
-                newDirection = vel.heading() - 1.57
-            } else if (vel.heading() > 315 && vel.heading() < 6.28) {
-                newDirection = vel.heading() - 4.71
-            } else if (vel.heading() > 0 && vel.heading() < 45) {
-                newDirection = vel.heading() + 1.57
+            console.log('rightTop');
+            if (vel.heading() > degToRad(225) && vel.heading() < degToRad(315)) {
+                newDirection = vel.heading() - degToRad(70)
+            } else if (vel.heading() > degToRad(315) && vel.heading() < degToRad(360)) {
+                newDirection = vel.heading() - degToRad(250)
+            } else if (vel.heading() > 0 && vel.heading() < degToRad(45)) {
+                newDirection = vel.heading() + degToRad(70)
             }break;
         case 'leftBottom':
-            if (vel.heading() > 135 && vel.heading() < 225) {
-                newDirection = vel.heading() + 1.57
-                console.log(newDirection)
-            } else if (vel.heading() > 45 && vel.heading() < 135) {
-                newDirection = vel.heading() - 4.71
-                console.log(newDirection)
+            if (vel.heading() > degToRad(135) && vel.heading() < degToRad(225)) {
+                newDirection = vel.heading() + degToRad(90)
+            } else if (vel.heading() > degToRad(45) && vel.heading() < degToRad(135)) {
+                newDirection = vel.heading() - degToRad(270)
             }break;
         case 'rightBottom':
-            if (vel.heading() > 45 && vel.heading() < 315) {
-                newDirection = vel.heading() + 1.57
-            } else if (vel.heading() > 315 && vel.heading() < 6.28) {
-                newDirection = vel.heading() -1.57
-            } else if (vel.heading() > 0 && vel.heading() < 45) {
-                newDirection = vel.heading() - 4.71
+            if (vel.heading() > degToRad(45) && vel.heading() < degToRad(315)) {
+                newDirection = vel.heading() + degToRad(90)
+            } else if (vel.heading() > degToRad(315) && vel.heading() < degToRad(360)) {
+                newDirection = vel.heading() - degToRad(90)
+            } else if (vel.heading() > 0 && vel.heading() < degToRad(45)) {
+                newDirection = vel.heading() - degToRad(270)
             }break;
     }
-    //console.log(newDirection);
-    newVel = p5.Vector.fromAngle(newDirection, vel.mag() * 0.9)
-    newVel.limit(10)
+    newVel = p5.Vector.fromAngle(newDirection, 2 /*vel.mag() * 0.9*/)
+    newVel.limit(10) // limit magnitude
     vel.set(newVel)
     return vel
 }

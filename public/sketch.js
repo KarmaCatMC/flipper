@@ -143,8 +143,8 @@ function setup() {
     createCanvas(700, 800, P2D, flipperCanvas);
 
     pos = createVector(450, 100, 0);
-    vel = createVector(0, 0, 0)
-    vel = p5.Vector.fromAngle(PI/1.9,2)
+    // vel = createVector(0, 0, 0)
+    vel = p5.Vector.fromAngle(1.1,2)
     point(pos);
 }
 
@@ -172,14 +172,14 @@ function drawBall() {
 }
 
 function resetGravity() {
-    if(vel.heading > 255 && vel.heading < 285){
+    if(vel.heading > 4.45 && vel.heading < 4.97){
         vel.setMag(vel.mag()-0.5)
-    } else if (vel.heading < 255 && vel.heading > 90){
-        vel = p5.Vector.fromAngle(vel.heading - 5, vel.mag())
-    } else if (vel.heading > 285 && vel.heading < 360){
-        vel = p5.Vector.fromAngle(vel.heading + 5 , vel.mag())
-    } else if (vel.heading > 0 && vel.heading < 90){
-        vel = p5.Vector.fromAngle(vel.heading + 5, vel.mag())
+    } else if (vel.heading < 4.45 && vel.heading > 1.57){
+        vel = p5.Vector.fromAngle(vel.heading - 0.08, vel.mag())
+    } else if (vel.heading > 4.97 && vel.heading < 6.28){
+        vel = p5.Vector.fromAngle(vel.heading + 0.08 , vel.mag())
+    } else if (vel.heading > 0 && vel.heading < 1.57){
+        vel = p5.Vector.fromAngle(vel.heading + 0.08, vel.mag())
     }
 }
 
@@ -249,7 +249,7 @@ function draw() {
     colliding = false
     background(250)
 
-    console.log(vel.heading())
+
     // drawing the level and flippers
     drawLevel()
     flipperLeft.descend()
@@ -258,9 +258,8 @@ function draw() {
     flipperRight.show()
 
     vel = detectCollision()
-    // vel = calculateVelocity(colDirection, vel)
     pos = calculatePosition(pos, vel)
-    detectCollision()
+    // detectCollision()
     drawBall()
     drawArrow(pos, vel, 'black')
     resetGravity()
